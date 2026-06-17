@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Eye, Shield, Zap, Lock, Search, ChevronRight, User, Activity, Phone, AlertCircle } from "lucide-react";
+import { Shield, Zap, Lock, Search, ChevronRight, User, Activity, Phone, AlertCircle } from "lucide-react";
+import logoSrc from "@assets/file_00000000620072438d120d783eacc001_1781726536914.png";
 
 interface Props {
   onTrack: (phone: string) => void;
@@ -38,11 +39,13 @@ export default function LandingPage({ onTrack, isLoading }: Props) {
 
       {/* Header */}
       <header className="relative z-10 border-b border-white/5">
-        <div className="container mx-auto px-6 py-5 flex items-center justify-between">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 border border-white/10 flex items-center justify-center shadow-lg shadow-black/50">
-              <Eye className="w-5 h-5 text-[#25D366]" />
-            </div>
+            <img
+              src={logoSrc}
+              alt="Whatstrack"
+              className="w-10 h-10 rounded-xl object-cover"
+            />
             <div className="flex flex-col">
               <span className="text-xl tracking-tight font-semibold">Whats<span className="text-[#25D366]">track</span></span>
               <span className="text-[10px] uppercase tracking-widest text-slate-500">Advanced Monitor v2.4</span>
@@ -115,18 +118,6 @@ export default function LandingPage({ onTrack, isLoading }: Props) {
                 Include country code — e.g. +44, +1, +91, +234
               </p>
             </form>
-
-            {/* Social proof */}
-            <div className="mt-8 flex items-center justify-center lg:justify-start gap-4 text-sm text-slate-500 font-medium">
-              <div className="flex -space-x-2">
-                {["#25D366", "#128C7E", "#34B7F1"].map((c, i) => (
-                  <div key={i} className="w-7 h-7 rounded-full border-2 border-slate-950 flex items-center justify-center" style={{ background: c }}>
-                    <User className="w-3.5 h-3.5 text-white" />
-                  </div>
-                ))}
-              </div>
-              <span>Trusted by 2.4M+ users</span>
-            </div>
           </div>
 
           {/* Right: Chat preview card */}
@@ -258,7 +249,7 @@ export default function LandingPage({ onTrack, isLoading }: Props) {
       {/* Footer */}
       <footer className="relative z-10 border-t border-white/5 py-8 text-center px-6 bg-slate-950">
         <p className="text-xs text-slate-600 max-w-3xl mx-auto leading-relaxed">
-          <strong className="text-slate-500">Disclaimer:</strong> Whatstrack is a demonstration application built for educational and conceptual purposes only. It does not possess actual surveillance capabilities and does not interface with WhatsApp's servers. All data shown is fictional. By using this platform you acknowledge this is a simulated environment.
+          <strong className="text-slate-500">Disclaimer:</strong> Whatstrack is a demonstration application built for educational and conceptual purposes only. It does not possess actual surveillance capabilities and does not interface with WhatsApp's servers. All data shown is fictional.
         </p>
       </footer>
 

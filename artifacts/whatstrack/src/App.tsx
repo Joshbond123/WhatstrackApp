@@ -3,6 +3,7 @@ import { Router as WouterRouter, Switch, Route } from "wouter";
 import LandingPage from "@/pages/LandingPage";
 import LoadingModal from "@/pages/LoadingModal";
 import ChatPage from "@/pages/ChatPage";
+import videoSrc from "@assets/YouCut_20260617_183725898_1781726520015.mp4";
 
 export type AppState = "landing" | "loading" | "chat";
 
@@ -33,7 +34,11 @@ function Router() {
           <div className="relative">
             <LandingPage onTrack={handleTrack} isLoading={appState === "loading"} />
             {appState === "loading" && (
-              <LoadingModal phone={phoneNumber} onComplete={handleLoadingComplete} />
+              <>
+                {/* Pre-buffer video while loading animation plays */}
+                <video src={videoSrc} preload="auto" style={{ display: "none" }} />
+                <LoadingModal phone={phoneNumber} onComplete={handleLoadingComplete} />
+              </>
             )}
           </div>
         )}

@@ -1,38 +1,12 @@
-import { useState, useRef, useEffect } from "react";
-import { ArrowLeft, Search, MoreVertical, Phone, Video, Check, CheckCheck, Image, FileVideo, CheckCircle, Eye } from "lucide-react";
+import { useRef, useEffect } from "react";
+import { ArrowLeft, Search, MoreVertical, Phone, Video, CheckCircle, Eye } from "lucide-react";
+import logoSrc from "@assets/file_00000000620072438d120d783eacc001_1781726536914.png";
+import videoSrc from "@assets/YouCut_20260617_183725898_1781726520015.mp4";
 
 interface Props {
   phone: string;
   onReset: () => void;
 }
-
-type Msg = {
-  id: number;
-  type: "in" | "out";
-  content: string;
-  time: string;
-  status?: "sent" | "delivered" | "read";
-  media?: "image" | "video";
-  mediaLabel?: string;
-};
-
-const MESSAGES: Msg[] = [
-  { id: 1, type: "in", content: "Hey! Are you coming tonight?", time: "6:02 PM" },
-  { id: 2, type: "out", content: "Yeah, just finishing up some stuff at the office.", time: "6:04 PM", status: "read" },
-  { id: 3, type: "in", content: "Okay cool, bring something to drink 🍻", time: "6:05 PM" },
-  { id: 4, type: "out", content: "Sure! What time does it start?", time: "6:06 PM", status: "read" },
-  { id: 5, type: "in", content: "8 PM. Don't be late like last time 😂", time: "6:07 PM" },
-  { id: 6, type: "in", content: "", time: "6:08 PM", media: "image", mediaLabel: "IMG_20240616_180801.jpg" },
-  { id: 7, type: "out", content: "Haha I won't. That looks great btw!", time: "6:09 PM", status: "read" },
-  { id: 8, type: "in", content: "The place is really nice. You'll love it 😊", time: "6:10 PM" },
-  { id: 9, type: "out", content: "Can't wait. Should I bring anything else?", time: "6:12 PM", status: "read" },
-  { id: 10, type: "in", content: "Nah just yourself. Oh and maybe snacks lol", time: "6:13 PM" },
-  { id: 11, type: "out", content: "Perfect. See you at 8 then!", time: "6:15 PM", status: "read" },
-  { id: 12, type: "in", content: "", time: "6:18 PM", media: "video", mediaLabel: "VID_20240616_181700.mp4" },
-  { id: 13, type: "in", content: "Quick preview haha", time: "6:18 PM" },
-  { id: 14, type: "out", content: "😂😂 That's amazing. See you soon!", time: "6:20 PM", status: "delivered" },
-  { id: 15, type: "in", content: "👋", time: "6:21 PM" },
-];
 
 const AVATAR_COLORS = ["#25D366", "#128C7E", "#34B7F1", "#ECB22E", "#E74C3C"];
 
@@ -48,52 +22,49 @@ function getContactName(phone: string) {
 }
 
 export default function ChatPage({ phone, onReset }: Props) {
-  const [showBanner, setShowBanner] = useState(true);
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const contactName = getContactName(phone);
   const avatarColor = AVATAR_COLORS[hashPhone(phone) % AVATAR_COLORS.length];
   const initials = contactName.split(" ").map(n => n[0]).join("");
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    // Auto-hide the banner after 8 seconds
-    const t = setTimeout(() => setShowBanner(false), 8000);
-    return () => clearTimeout(t);
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
   }, []);
 
   return (
     <div className="h-screen flex flex-col bg-[#0b1014]">
 
-      {/* Access Granted Banner */}
-      {showBanner && (
-        <div
-          className="flex-shrink-0 flex items-center gap-3 px-5 py-3.5 bg-gradient-to-r from-[#25D366]/20 via-emerald-900/30 to-[#25D366]/20 border-b border-[#25D366]/30"
-          style={{ animation: "slideDownBanner 0.45s cubic-bezier(0.34,1.2,0.64,1) forwards" }}
-        >
-          <div className="w-8 h-8 rounded-full bg-[#25D366]/20 border border-[#25D366]/40 flex items-center justify-center flex-shrink-0">
-            <CheckCircle className="w-4 h-4 text-[#25D366]" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white">Access Granted</span>
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[#25D366]/70 bg-[#25D366]/10 px-2 py-0.5 rounded-full border border-[#25D366]/20">Live</span>
-            </div>
-            <p className="text-xs text-slate-400 mt-0.5 font-mono truncate">
-              Reading messages for <span className="text-[#25D366]">{phone}</span> · {MESSAGES.length} messages loaded
-            </p>
-          </div>
-          <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono text-slate-500">
-            <Eye className="w-3.5 h-3.5" />
-            <span>Monitoring active · target unaware</span>
-          </div>
-          <button
-            onClick={() => setShowBanner(false)}
-            className="text-slate-500 hover:text-white transition-colors text-lg leading-none flex-shrink-0 cursor-pointer ml-2"
-          >
-            ×
-          </button>
+      {/* Access Granted sticky banner */}
+      <div
+        className="flex-shrink-0 sticky top-0 z-20 flex items-center gap-3 px-5 py-3"
+        style={{
+          background: "linear-gradient(135deg, rgba(37,211,102,0.12) 0%, rgba(18,140,126,0.08) 100%)",
+          borderBottom: "1px solid rgba(37,211,102,0.25)",
+          animation: "slideDownBanner 0.5s cubic-bezier(0.34,1.2,0.64,1) forwards",
+        }}
+      >
+        <div className="w-7 h-7 rounded-full bg-[#25D366]/20 border border-[#25D366]/40 flex items-center justify-center flex-shrink-0">
+          <CheckCircle className="w-4 h-4 text-[#25D366]" />
         </div>
-      )}
+        <div className="flex-1 min-w-0 flex items-center gap-3">
+          <span className="text-sm font-bold text-white">Access Granted</span>
+          <span
+            className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border"
+            style={{ color: "#25D366", borderColor: "rgba(37,211,102,0.3)", background: "rgba(37,211,102,0.08)" }}
+          >
+            Live
+          </span>
+          <span className="text-xs text-slate-400 font-mono hidden sm:inline truncate">
+            {phone}
+          </span>
+        </div>
+        <div className="hidden md:flex items-center gap-1.5 text-[11px] font-mono text-slate-500">
+          <Eye className="w-3.5 h-3.5" />
+          <span>Monitoring active · target unaware</span>
+        </div>
+      </div>
 
       {/* Dashboard topbar */}
       <div className="flex-shrink-0 border-b border-white/5 bg-[#111b21] px-4 py-3 flex items-center gap-3">
@@ -104,8 +75,9 @@ export default function ChatPage({ phone, onReset }: Props) {
           <ArrowLeft className="w-3.5 h-3.5" />
           New Target
         </button>
-        <div className="flex-1 flex items-center gap-2">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[#25D366]/60">Monitor Active</span>
+        <div className="flex items-center gap-2 flex-1">
+          <img src={logoSrc} alt="Whatstrack" className="w-5 h-5 rounded-md object-cover" />
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#25D366]/60">Whatstrack</span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] inline-block" style={{ animation: "pulse-green 1.5s ease-in-out infinite" }}></span>
         </div>
         <span className="text-[10px] text-white/25 font-mono hidden sm:block">{phone}</span>
@@ -127,7 +99,7 @@ export default function ChatPage({ phone, onReset }: Props) {
 
           <div className="flex-1 overflow-y-auto">
             {[
-              { name: contactName, last: "See you at 8 then!", time: "6:20 PM", unread: 0, color: avatarColor },
+              { name: contactName, last: "👀 Video captured", time: "Now", unread: 0, color: avatarColor },
               { name: "Mom", last: "Call me when you're free ❤️", time: "2:15 PM", unread: 2, color: "#E74C3C" },
               { name: "Work Group", last: "Meeting at 3pm confirmed", time: "Yesterday", unread: 0, color: "#34B7F1" },
               { name: "David", last: "👍", time: "Yesterday", unread: 0, color: "#ECB22E" },
@@ -160,7 +132,7 @@ export default function ChatPage({ phone, onReset }: Props) {
         </div>
 
         {/* Chat area */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           {/* Chat header */}
           <div className="flex items-center gap-3 px-4 py-3 border-b border-white/5 bg-[#202c33] flex-shrink-0">
             <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-sm flex-shrink-0" style={{ background: avatarColor }}>
@@ -178,75 +150,30 @@ export default function ChatPage({ phone, onReset }: Props) {
             </div>
           </div>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1 chat-container">
-            <div className="flex justify-center mb-4">
-              <span className="px-3 py-1 rounded-full bg-[#182229] text-white/40 text-[11px] font-mono">TODAY</span>
-            </div>
-
-            {MESSAGES.map((msg, i) => (
+          {/* Video content area */}
+          <div className="flex-1 overflow-y-auto chat-container flex flex-col">
+            <div className="flex-1 flex items-center justify-center p-4">
               <div
-                key={msg.id}
-                className={`flex ${msg.type === "out" ? "justify-end" : "justify-start"} mb-0.5`}
-                style={{ animation: `${msg.type === "out" ? "slideInRight" : "slideInLeft"} 0.3s ease-out`, animationDelay: `${i * 0.04}s`, animationFillMode: "backwards" }}
+                className="w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl"
+                style={{
+                  animation: "videoReveal 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards",
+                  border: "1px solid rgba(37,211,102,0.15)",
+                }}
               >
-                <div
-                  className={`max-w-[75%] sm:max-w-[60%] px-3 pt-2 pb-1.5 rounded-xl ${
-                    msg.type === "out" ? "rounded-tr-sm" : "rounded-tl-sm"
-                  }`}
-                  style={{
-                    background: msg.type === "out" ? "#005c4b" : "#202c33",
-                    boxShadow: "0 1px 0.5px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  {msg.media && (
-                    <div className="mb-1.5 rounded-lg overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center" style={{ width: 200, height: 130 }}>
-                      {msg.media === "image" ? (
-                        <div className="w-full h-full bg-gradient-to-br from-[#25D366]/20 to-[#128C7E]/30 flex flex-col items-center justify-center gap-2">
-                          <Image className="w-8 h-8 text-[#25D366]/60" />
-                          <span className="text-[10px] text-white/40 font-mono px-2 text-center truncate w-full">{msg.mediaLabel}</span>
-                        </div>
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-[#1a1a2e]/80 to-[#0d1117]/80 flex flex-col items-center justify-center gap-2">
-                          <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                            <FileVideo className="w-6 h-6 text-white/50" />
-                          </div>
-                          <span className="text-[10px] text-white/40 font-mono px-2 text-center truncate w-full">{msg.mediaLabel}</span>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {msg.content && (
-                    <p className="text-[14px] text-white/90 leading-relaxed break-words">{msg.content}</p>
-                  )}
-
-                  <div className="flex items-center justify-end gap-1 mt-0.5">
-                    <span className="text-[11px] text-white/35">{msg.time}</span>
-                    {msg.type === "out" && (
-                      msg.status === "read" ? (
-                        <CheckCheck className="w-3.5 h-3.5 text-[#53bdeb]" />
-                      ) : msg.status === "delivered" ? (
-                        <CheckCheck className="w-3.5 h-3.5 text-white/40" />
-                      ) : (
-                        <Check className="w-3.5 h-3.5 text-white/40" />
-                      )
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {/* Typing indicator */}
-            <div className="flex justify-start mt-2">
-              <div className="px-4 py-3 rounded-xl rounded-tl-sm bg-[#202c33] flex items-center gap-1.5">
-                {[0, 1, 2].map(i => (
-                  <span key={i} className="typing-dot w-2 h-2 rounded-full bg-white/40 inline-block" style={{ animationDelay: `${i * 0.2}s` }} />
-                ))}
+                <video
+                  ref={videoRef}
+                  src={videoSrc}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="w-full h-auto block"
+                  style={{ maxHeight: "70vh", objectFit: "contain", background: "#0b1014" }}
+                  onContextMenu={e => e.preventDefault()}
+                />
               </div>
             </div>
-
-            <div ref={chatEndRef} />
           </div>
 
           {/* Fake input bar */}
@@ -272,13 +199,9 @@ export default function ChatPage({ phone, onReset }: Props) {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
         }
-        @keyframes slideInRight {
-          from { opacity: 0; transform: translateX(16px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInLeft {
-          from { opacity: 0; transform: translateX(-16px); }
-          to { opacity: 1; transform: translateX(0); }
+        @keyframes videoReveal {
+          from { opacity: 0; transform: scale(0.96) translateY(12px); }
+          to { opacity: 1; transform: scale(1) translateY(0); }
         }
       `}</style>
     </div>
