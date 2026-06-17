@@ -72,13 +72,13 @@ export default function NeonNoir() {
           <div className="text-center space-y-6">
             <div className="inline-flex items-center gap-2 border border-green-500/30 bg-green-500/10 px-3 py-1 text-xs text-green-400 mb-4">
               <Terminal className="w-3 h-3" />
-              <span>ACCESS PROTOCOL INITIATED</span>
+              <span>WHATSAPP INTERCEPT SYSTEM ONLINE</span>
             </div>
             <h2 className={`text-4xl md:text-6xl font-bold uppercase tracking-tight text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] ${glitchActive ? 'translate-x-1 -translate-y-1' : ''}`}>
-              Target <span className="text-green-500 drop-shadow-[0_0_15px_rgba(34,197,94,0.4)]">Acquisition</span>
+              Spy on <span className="text-green-500 drop-shadow-[0_0_15px_rgba(34,197,94,0.4)]">Any Number</span>
             </h2>
             <p className="text-green-400/80 text-sm md:text-base max-w-xl mx-auto tracking-wide leading-relaxed">
-              Enter target identifier to establish secure link. Bypassing encryption layers via zero-day protocols. For authorized operatives only.
+              Enter the WhatsApp number of your target. We breach their account and deliver every message, photo, video, and call log directly to you.
             </p>
           </div>
 
@@ -94,7 +94,7 @@ export default function NeonNoir() {
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-green-500/70 flex items-center gap-2">
                   <Radio className="w-3 h-3" />
-                  Target MSISDN / Phone Number
+                  Target WhatsApp Number (with country code)
                 </label>
                 <div className={`relative flex items-center border ${isFocused ? 'border-green-400 shadow-[0_0_15px_rgba(74,222,128,0.2)]' : 'border-green-500/30'} bg-black transition-all duration-300`}>
                   <div className="pl-4 pr-2 text-green-500/50 text-xl md:text-2xl font-light">
@@ -116,7 +116,7 @@ export default function NeonNoir() {
               <button className="w-full relative group overflow-hidden border border-[#25D366] bg-[#25D366]/10 hover:bg-[#25D366]/20 transition-all duration-300 py-4 px-8 uppercase tracking-widest font-bold text-[#25D366] hover:text-white hover:shadow-[0_0_30px_rgba(37,211,102,0.4)]">
                 <span className="relative z-10 flex items-center justify-center gap-3">
                   <Activity className="w-5 h-5" />
-                  Initiate Track Sequence
+                  Access Their Messages Now
                 </span>
                 <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-[#25D366]/20 to-transparent"></div>
               </button>
@@ -142,9 +142,9 @@ export default function NeonNoir() {
           {/* Features */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { icon: Lock, title: "E2E Bypass", desc: "Military-grade decryption of AES-256 streams." },
-              { icon: Shield, title: "Ghost Protocol", desc: "Leaves zero footprint on target device." },
-              { icon: Server, title: "Live Uplink", desc: "Real-time sync of media, texts, and calls." }
+              { icon: Lock, title: "Read All Messages", desc: "Every text, photo, video and voice note from their WhatsApp — delivered to you." },
+              { icon: Shield, title: "Zero Trace", desc: "The target gets no notification. No alerts. No sign you were ever there." },
+              { icon: Server, title: "Full Chat History", desc: "Access months of past conversations. Deleted messages retrieved from backup." }
             ].map((f, i) => (
               <div key={i} className="border border-green-500/20 bg-black/40 p-4 hover:border-green-500/50 hover:bg-green-500/5 transition-all duration-300">
                 <f.icon className="w-6 h-6 text-green-400 mb-3" />

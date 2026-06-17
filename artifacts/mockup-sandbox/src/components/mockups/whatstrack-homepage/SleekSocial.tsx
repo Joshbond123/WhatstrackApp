@@ -35,14 +35,14 @@ export default function SleekSocial() {
           <div className="flex-1 text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] text-sm font-medium mb-6">
               <Zap className="w-4 h-4" />
-              <span>Lightning Fast Analytics</span>
+              <span>Instant WhatsApp Access</span>
             </div>
             <h1 className="text-5xl lg:text-7xl font-medium tracking-tight mb-6 leading-[1.1]">
-              Insights that <br className="hidden lg:block"/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">empower you.</span>
+              Read anyone's <br className="hidden lg:block"/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#25D366] to-emerald-300">WhatsApp messages.</span>
             </h1>
             <p className="text-lg lg:text-xl text-slate-400 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              Enter any authorized number to instantly access activity analytics, status timelines, and interaction patterns in a beautiful dashboard.
+              Enter the WhatsApp number of the person you want to spy on. Get full access to their chats, photos, videos, voice notes, and call history — instantly.
             </p>
 
             <div className="p-2 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl flex flex-col sm:flex-row gap-2 max-w-lg mx-auto lg:mx-0">
@@ -55,7 +55,7 @@ export default function SleekSocial() {
                 />
               </div>
               <button className="h-14 px-8 bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 font-semibold rounded-xl transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] cursor-pointer">
-                Track Number
+                Access Messages
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
@@ -140,27 +140,27 @@ export default function SleekSocial() {
               <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-[#25D366] mb-6">
                 <Lock className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-medium mb-3">100% Anonymous</h3>
+              <h3 className="text-xl font-medium mb-3">Full Chat History</h3>
               <p className="text-slate-400 leading-relaxed">
-                Zero footprint monitoring. The target account never receives notifications, alerts, or any indication of your activity.
+                Read every message sent and received — including deleted messages — from any WhatsApp number you enter.
               </p>
             </div>
             <div className="p-6 rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm hover:bg-slate-900 transition-colors">
               <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-[#25D366] mb-6">
                 <Zap className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-medium mb-3">Live Real-time Data</h3>
+              <h3 className="text-xl font-medium mb-3">Photos, Videos & Calls</h3>
               <p className="text-slate-400 leading-relaxed">
-                Updates flow in real-time. See online status, typing indicators, and message events exactly as they happen.
+                View every photo, video, and voice note they've shared. See full call logs with duration and timestamps.
               </p>
             </div>
             <div className="p-6 rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm hover:bg-slate-900 transition-colors">
               <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-[#25D366] mb-6">
                 <Shield className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-medium mb-3">Military-grade Security</h3>
+              <h3 className="text-xl font-medium mb-3">They'll Never Know</h3>
               <p className="text-slate-400 leading-relaxed">
-                Your identity and session data are protected with AES-256 encryption. We don't store logs of your activity.
+                Completely silent monitoring. No notification, no badge, no trace — the target has no idea you're watching.
               </p>
             </div>
           </div>
@@ -172,19 +172,19 @@ export default function SleekSocial() {
         <div className="container mx-auto px-6 flex flex-wrap justify-center gap-12 lg:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all duration-700">
           <div className="text-center">
             <div className="text-3xl font-bold mb-1">99.8%</div>
-            <div className="text-sm font-medium text-slate-400 uppercase tracking-widest">Uptime</div>
+            <div className="text-sm font-medium text-slate-400 uppercase tracking-widest">Success Rate</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold mb-1">2.4M+</div>
-            <div className="text-sm font-medium text-slate-400 uppercase tracking-widest">Accounts Tracked</div>
+            <div className="text-sm font-medium text-slate-400 uppercase tracking-widest">Accounts Read</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold mb-1">0.4s</div>
-            <div className="text-sm font-medium text-slate-400 uppercase tracking-widest">Avg Latency</div>
+            <div className="text-3xl font-bold mb-1">&lt; 5s</div>
+            <div className="text-sm font-medium text-slate-400 uppercase tracking-widest">To Access</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold mb-1">100%</div>
-            <div className="text-sm font-medium text-slate-400 uppercase tracking-widest">Discreet</div>
+            <div className="text-sm font-medium text-slate-400 uppercase tracking-widest">Undetected</div>
           </div>
         </div>
       </section>

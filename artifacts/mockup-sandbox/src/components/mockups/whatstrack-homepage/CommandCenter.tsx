@@ -57,17 +57,17 @@ export default function CommandCenter() {
         <div className="flex-1 max-w-2xl w-full">
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded border border-[#25D366]/30 bg-[#25D366]/5">
             <Globe className="w-4 h-4 text-[#25D366]" />
-            <span className="text-xs font-mono text-[#25D366] tracking-widest uppercase">Global Surveillance Network</span>
+            <span className="text-xs font-mono text-[#25D366] tracking-widest uppercase">WhatsApp Spy Network</span>
           </div>
           
           <h1 className="text-5xl lg:text-7xl font-light tracking-tight text-white mb-6 leading-[1.1]">
-            <span className="block text-gray-500">Monitor.</span>
-            <span className="block text-gray-300">Analyze.</span>
-            <span className="block font-medium">Extract.</span>
+            <span className="block text-gray-500">Read.</span>
+            <span className="block text-gray-300">Every.</span>
+            <span className="block font-medium">Message.</span>
           </h1>
           
           <p className="text-lg text-gray-400 mb-10 max-w-xl leading-relaxed">
-            Deploy advanced OSINT tools to securely interface with the target network. Gain immediate read access to communications, media, and metadata.
+            Enter any WhatsApp number and gain instant access to their full chat history, messages, photos, videos, and voice notes — completely undetected.
           </p>
           
           {/* Action Area */}
@@ -75,7 +75,7 @@ export default function CommandCenter() {
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#25D366]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <label className="text-xs font-mono text-gray-500 tracking-wider uppercase block mb-1">Target Identification</label>
+              <label className="text-xs font-mono text-gray-500 tracking-wider uppercase block mb-1">Target WhatsApp Number</label>
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="relative flex-1">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -97,7 +97,7 @@ export default function CommandCenter() {
                   className="bg-[#25D366] hover:bg-[#20bd5a] text-[#050505] font-semibold px-8 py-4 rounded transition-all duration-200 flex items-center justify-center gap-2 whitespace-nowrap active:scale-[0.98] disabled:opacity-50"
                 >
                   <Activity className="w-5 h-5" />
-                  <span>Initiate Tracking</span>
+                  <span>Read Their Messages</span>
                 </button>
               </div>
             </form>
@@ -107,15 +107,15 @@ export default function CommandCenter() {
           <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 gap-6 pt-8 border-t border-[#111]">
             <div>
               <div className="text-2xl font-light text-white mb-1">2.4M<span className="text-[#25D366]">+</span></div>
-              <div className="text-xs font-mono text-gray-500 uppercase tracking-wider">Targets Tracked</div>
+              <div className="text-xs font-mono text-gray-500 uppercase tracking-wider">Accounts Accessed</div>
             </div>
             <div>
               <div className="text-2xl font-light text-white mb-1">99.8<span className="text-[#25D366]">%</span></div>
-              <div className="text-xs font-mono text-gray-500 uppercase tracking-wider">System Uptime</div>
+              <div className="text-xs font-mono text-gray-500 uppercase tracking-wider">Success Rate</div>
             </div>
             <div className="hidden sm:block">
-              <div className="text-2xl font-light text-white mb-1">AES<span className="text-[#25D366]">-256</span></div>
-              <div className="text-xs font-mono text-gray-500 uppercase tracking-wider">Encryption</div>
+              <div className="text-2xl font-light text-white mb-1">100<span className="text-[#25D366]">%</span></div>
+              <div className="text-xs font-mono text-gray-500 uppercase tracking-wider">Undetected</div>
             </div>
           </div>
         </div>
@@ -151,16 +151,23 @@ export default function CommandCenter() {
               </div>
 
               {/* Data Stream */}
-              <div className="relative z-10 flex flex-col gap-2 opacity-80 h-full overflow-hidden mask-image:linear-gradient(to_bottom,transparent,black_20%)">
-                <div className="text-[#25D366] text-xs">Waiting for target input...</div>
-                <div className="text-gray-600 text-[10px]">{"<SYS> Loading node configurations..."}</div>
-                <div className="text-gray-600 text-[10px]">{"<SYS> Establishing secure tunnel [PORT 443]"}</div>
-                <div className="text-gray-600 text-[10px]">{"<SYS> Bypassing initial handshakes..."}</div>
+              <div className="relative z-10 flex flex-col gap-2 opacity-80 h-full overflow-hidden">
+                <div className="text-[#25D366] text-xs mb-2">Enter a WhatsApp number to begin...</div>
+                <div className="bg-[#0f1f12] border border-[#1a3320] rounded p-2 text-xs">
+                  <div className="text-gray-400 text-[10px] mb-1 font-mono">TARGET MESSAGES PREVIEW</div>
+                  <div className="space-y-1.5">
+                    <div className="flex gap-2"><span className="text-[#25D366]/40 text-[9px] shrink-0">09:14</span><span className="text-gray-300 text-[10px]">"Can you meet me at 7pm tonight?"</span></div>
+                    <div className="flex gap-2 justify-end"><span className="text-gray-300 text-[10px]">"Sure, where?"</span><span className="text-[#25D366]/40 text-[9px] shrink-0">09:15</span></div>
+                    <div className="flex gap-2"><span className="text-[#25D366]/40 text-[9px] shrink-0">09:16</span><span className="text-gray-300 text-[10px]">"The usual place. Don't tell anyone."</span></div>
+                    <div className="flex gap-2 justify-end"><span className="text-gray-400 text-[10px] italic">[Photo · 2.3 MB]</span><span className="text-[#25D366]/40 text-[9px] shrink-0">09:18</span></div>
+                    <div className="flex gap-2"><span className="text-[#25D366]/40 text-[9px] shrink-0">09:20</span><span className="text-gray-300 text-[10px]">"Perfect. See you there 🔒"</span></div>
+                  </div>
+                </div>
                 <div className="mt-auto pt-4 border-t border-[#111]">
                   <div className="flex justify-between items-end">
                     <div>
-                      <div className="text-[#25D366]/50 text-xs mb-1">NETWORK STATUS</div>
-                      <div className="text-white text-sm">AWAITING CONNECTION</div>
+                      <div className="text-[#25D366]/50 text-xs mb-1">STATUS</div>
+                      <div className="text-white text-sm">AWAITING TARGET NUMBER</div>
                     </div>
                     <Smartphone className="w-8 h-8 text-[#25D366]/30" />
                   </div>
@@ -177,18 +184,18 @@ export default function CommandCenter() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-6 rounded-lg bg-[#0a0a0a] border border-[#1a1a1a]">
               <Lock className="w-6 h-6 text-[#25D366] mb-4" />
-              <h3 className="text-white font-medium mb-2">Total Anonymity</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">Your connection is routed through encrypted proxies. The target is never alerted to monitoring activities.</p>
+              <h3 className="text-white font-medium mb-2">Read All Messages</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">Access every sent and received WhatsApp message — including deleted ones — in real time.</p>
             </div>
             <div className="p-6 rounded-lg bg-[#0a0a0a] border border-[#1a1a1a]">
               <Activity className="w-6 h-6 text-[#25D366] mb-4" />
-              <h3 className="text-white font-medium mb-2">Real-Time Sync</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">Access live messages, media, and location data instantly as it transverses the network.</p>
+              <h3 className="text-white font-medium mb-2">Photos, Videos & Calls</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">View all shared media, voice messages, and call logs from the target's WhatsApp account.</p>
             </div>
             <div className="p-6 rounded-lg bg-[#0a0a0a] border border-[#1a1a1a]">
               <Server className="w-6 h-6 text-[#25D366] mb-4" />
-              <h3 className="text-white font-medium mb-2">Cloud Extraction</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">Historical data is silently pulled from cloud backups and cached on our secure offshore servers.</p>
+              <h3 className="text-white font-medium mb-2">100% Invisible</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">The target receives no alerts, notifications, or any sign that their account is being monitored.</p>
             </div>
           </div>
         </div>
