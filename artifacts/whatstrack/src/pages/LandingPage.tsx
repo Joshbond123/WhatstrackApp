@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { Shield, Eye, Lock, Wifi, AlertCircle, ChevronRight, Star, Users, Activity } from "lucide-react";
+import { Eye, Shield, Zap, Lock, Search, ChevronRight, User, Activity, Phone, AlertCircle } from "lucide-react";
 
 interface Props {
   onTrack: (phone: string) => void;
+  isLoading?: boolean;
 }
 
-export default function LandingPage({ onTrack }: Props) {
+export default function LandingPage({ onTrack, isLoading }: Props) {
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
 
   const validatePhone = (value: string) => {
     const cleaned = value.replace(/\s/g, "");
-    if (!cleaned) return "Please enter a phone number.";
+    if (!cleaned) return "Please enter a WhatsApp number.";
     if (!/^\+?[1-9]\d{6,14}$/.test(cleaned)) return "Enter a valid number with country code (e.g. +1 555 000 0000).";
     return "";
   };
@@ -30,138 +31,243 @@ export default function LandingPage({ onTrack }: Props) {
   };
 
   return (
-    <div className="min-h-screen whatsapp-bg flex flex-col">
+    <div className={`min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-[#25D366]/30 overflow-x-hidden relative transition-all duration-300 ${isLoading ? "pointer-events-none" : ""}`}>
+      {/* Background glows */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-[#25D366]/8 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-emerald-900/20 blur-[150px] rounded-full pointer-events-none" />
+
       {/* Header */}
-      <header className="border-b border-white/5 px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <header className="relative z-10 border-b border-white/5">
+        <div className="container mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#25D366] flex items-center justify-center animate-glow-pulse">
-              <Eye className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 border border-white/10 flex items-center justify-center shadow-lg shadow-black/50">
+              <Eye className="w-5 h-5 text-[#25D366]" />
             </div>
-            <div>
-              <span className="text-white font-bold text-lg tracking-tight">Whats<span className="text-[#25D366]">track</span></span>
-              <div className="text-[10px] text-[#25D366]/70 font-mono uppercase tracking-widest -mt-0.5">Advanced Monitor v2.4</div>
+            <div className="flex flex-col">
+              <span className="text-xl tracking-tight font-semibold">Whats<span className="text-[#25D366]">track</span></span>
+              <span className="text-[10px] uppercase tracking-widest text-slate-500">Advanced Monitor v2.4</span>
             </div>
           </div>
-          <div className="hidden sm:flex items-center gap-6 text-xs text-white/40">
-            <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse-green inline-block"></span>System Online</span>
-            <span>SSL Secured</span>
-            <span>Demo Mode</span>
+          <div className="flex items-center gap-2 bg-slate-900/50 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#25D366]"></span>
+            </span>
+            <span className="text-xs font-medium text-slate-300">System Online</span>
           </div>
         </div>
       </header>
 
       {/* Hero */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-12">
-        {/* Demo disclaimer banner */}
-        <div className="mb-8 px-4 py-2.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-mono flex items-center gap-2 animate-fade-in-up">
-          <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-          <span>DEMONSTRATION PURPOSES ONLY — No real data is collected or processed</span>
-        </div>
+      <main className="relative z-10 container mx-auto px-6 pt-20 pb-28">
+        <div className="flex flex-col lg:flex-row items-center gap-16">
 
-        {/* Main card */}
-        <div className="w-full max-w-md glass-card rounded-2xl p-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-          {/* Icon */}
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#25D366]/20 to-[#128C7E]/20 border border-[#25D366]/30 flex items-center justify-center">
-                <svg viewBox="0 0 24 24" className="w-10 h-10 fill-[#25D366]">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
+          {/* Left: Copy & Form */}
+          <div className="flex-1 text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] text-sm font-medium mb-7">
+              <Zap className="w-4 h-4" />
+              <span>Instant WhatsApp Access</span>
+            </div>
+
+            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight mb-6 leading-[1.08]">
+              Read anyone's{" "}
+              <br className="hidden lg:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#25D366] to-emerald-300">
+                WhatsApp messages.
+              </span>
+            </h1>
+
+            <p className="text-lg lg:text-xl text-slate-400 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0">
+              Enter the WhatsApp number of the person you want to spy on. Get full access to their chats, photos, videos, voice notes, and call history — instantly.
+            </p>
+
+            {/* Input form */}
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto lg:mx-0">
+              <div className="p-2 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl flex flex-col sm:flex-row gap-2">
+                <div className="relative flex-1 flex items-center">
+                  <Search className="absolute left-4 w-5 h-5 text-slate-400 flex-shrink-0" />
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={handleChange}
+                    placeholder="+1 (555) 000-0000"
+                    disabled={isLoading}
+                    className="w-full bg-transparent border-none focus:ring-0 text-slate-100 placeholder:text-slate-500 pl-12 pr-4 h-14 text-base font-mono outline-none"
+                    autoComplete="off"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="h-14 px-7 bg-[#25D366] hover:bg-[#20bd5a] disabled:opacity-60 text-slate-950 font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] cursor-pointer whitespace-nowrap"
+                >
+                  Access Messages
+                  <ChevronRight className="w-5 h-5" />
+                </button>
               </div>
-              <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#25D366] flex items-center justify-center">
-                <Lock className="w-2.5 h-2.5 text-white" />
+              {error && (
+                <p className="mt-3 text-sm text-red-400 flex items-center gap-1.5 justify-center lg:justify-start">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  {error}
+                </p>
+              )}
+              <p className="mt-3 text-xs text-slate-500 text-center lg:text-left">
+                Include country code — e.g. +44, +1, +91, +234
+              </p>
+            </form>
+
+            {/* Social proof */}
+            <div className="mt-8 flex items-center justify-center lg:justify-start gap-4 text-sm text-slate-500 font-medium">
+              <div className="flex -space-x-2">
+                {["#25D366", "#128C7E", "#34B7F1"].map((c, i) => (
+                  <div key={i} className="w-7 h-7 rounded-full border-2 border-slate-950 flex items-center justify-center" style={{ background: c }}>
+                    <User className="w-3.5 h-3.5 text-white" />
+                  </div>
+                ))}
               </div>
+              <span>Trusted by 2.4M+ users</span>
             </div>
           </div>
 
-          <h1 className="text-2xl font-bold text-white text-center mb-2">Access WhatsApp Account</h1>
-          <p className="text-white/50 text-sm text-center mb-8 leading-relaxed">
-            Enter the target phone number to begin remote monitoring session
-          </p>
+          {/* Right: Chat preview card */}
+          <div className="flex-1 w-full max-w-md mx-auto lg:mx-0 relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#25D366]/15 to-emerald-600/10 rounded-full blur-[80px] pointer-events-none" />
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="text-xs font-mono text-[#25D366]/80 uppercase tracking-wider mb-2 block">
-                Target Phone Number
-              </label>
-              <div className={`flex items-center gap-3 rounded-xl border px-4 py-3.5 transition-all duration-200 bg-white/5 ${
-                error
-                  ? "border-red-500/50 bg-red-500/5"
-                  : "border-white/10 focus-within:border-[#25D366]/50 focus-within:bg-[#25D366]/5"
-              }`}>
-                <Wifi className="w-4 h-4 text-white/30 flex-shrink-0" />
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={handleChange}
-                  placeholder="+1 555 000 0000"
-                  className="flex-1 bg-transparent text-white placeholder-white/25 text-base outline-none font-mono"
-                  autoComplete="off"
-                />
+            {/* Main card */}
+            <div className="relative bg-slate-900/80 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl p-6">
+              {/* Contact header */}
+              <div className="flex items-center justify-between mb-5 pb-5 border-b border-white/5">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#25D366]/30 to-emerald-700/30 border border-[#25D366]/20 flex items-center justify-center">
+                    <User className="w-6 h-6 text-[#25D366]" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-white">+1 (555) 019-2834</div>
+                    <div className="text-sm text-[#25D366] flex items-center gap-1.5 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] inline-block"></span>
+                      Online Now
+                    </div>
+                  </div>
+                </div>
+                <Activity className="w-5 h-5 text-slate-500" />
               </div>
-              {error && (
-                <p className="mt-2 text-xs text-red-400 flex items-center gap-1.5">
-                  <AlertCircle className="w-3 h-3" /> {error}
-                </p>
-              )}
-              <p className="mt-1.5 text-xs text-white/30">Include country code (e.g. +44, +1, +91)</p>
+
+              {/* Mock messages */}
+              <div className="space-y-3">
+                <div className="flex justify-start">
+                  <div className="bg-slate-800 border border-white/5 rounded-2xl rounded-bl-sm px-4 py-2.5 text-sm text-slate-200 max-w-[78%]">
+                    Can you meet me at 7pm tonight?
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <div className="bg-[#005c4b] border border-[#25D366]/10 text-slate-100 rounded-2xl rounded-br-sm px-4 py-2.5 text-sm max-w-[78%]">
+                    Sure, where?
+                  </div>
+                </div>
+                <div className="flex justify-start">
+                  <div className="bg-slate-800 border border-white/5 rounded-2xl rounded-bl-sm px-4 py-2.5 text-sm text-slate-200 max-w-[78%]">
+                    The usual place. Don't tell anyone 🔒
+                  </div>
+                </div>
+                <div className="flex justify-start">
+                  <div className="bg-slate-800 border border-white/5 rounded-2xl rounded-bl-sm px-4 py-2.5 text-sm text-slate-200 max-w-[78%] flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-[#25D366]" />
+                    <span>Voice call · 14:23</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-500 font-mono">
+                <span>Last updated: just now</span>
+                <span className="flex items-center gap-1 text-[#25D366]/70">
+                  <Lock className="w-3 h-3" /> Encrypted
+                </span>
+              </div>
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-4 rounded-xl font-bold text-white text-base flex items-center justify-center gap-2.5 transition-all duration-200 cursor-pointer"
-              style={{
-                background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)",
-                boxShadow: "0 4px 24px hsla(142, 70%, 45%, 0.35)"
-              }}
-              onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 6px 32px hsla(142, 70%, 45%, 0.55)")}
-              onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 4px 24px hsla(142, 70%, 45%, 0.35)")}
+            {/* Floating badge */}
+            <div
+              className="absolute -left-6 top-1/3 bg-slate-900 border border-white/10 px-4 py-3 rounded-2xl shadow-xl backdrop-blur-xl"
+              style={{ animation: "float 4s ease-in-out infinite" }}
             >
-              <Eye className="w-5 h-5" />
-              Track / Access Account
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </form>
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-[#25D366]/15 flex items-center justify-center">
+                  <Shield className="w-4 h-4 text-[#25D366]" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-white">Access Granted</div>
+                  <div className="text-xs text-slate-400">Undetected</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
 
-          {/* Feature list */}
-          <div className="mt-6 pt-6 border-t border-white/5 grid grid-cols-3 gap-3">
+      {/* Features */}
+      <section className="relative z-10 border-t border-white/5 bg-slate-900/30">
+        <div className="container mx-auto px-6 py-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: Shield, label: "Encrypted" },
-              { icon: Eye, label: "Live Data" },
-              { icon: Lock, label: "Anonymous" },
-            ].map(({ icon: Icon, label }) => (
-              <div key={label} className="flex flex-col items-center gap-1.5 text-center">
-                <Icon className="w-4 h-4 text-[#25D366]/70" />
-                <span className="text-[11px] text-white/40">{label}</span>
+              {
+                icon: Lock,
+                title: "Full Chat History",
+                desc: "Read every message sent and received — including deleted ones — from any WhatsApp number you enter.",
+              },
+              {
+                icon: Zap,
+                title: "Photos, Videos & Calls",
+                desc: "View every photo, video, and voice note they've shared. Full call logs with duration and timestamps.",
+              },
+              {
+                icon: Shield,
+                title: "They'll Never Know",
+                desc: "Completely silent monitoring. No notification, no badge, no trace — the target has no idea you're watching.",
+              },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="p-6 rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm hover:bg-slate-900 transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-[#25D366] mb-5">
+                  <Icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{title}</h3>
+                <p className="text-slate-400 leading-relaxed text-sm">{desc}</p>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Stats row */}
-        <div className="mt-6 flex items-center gap-6 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+      {/* Stats */}
+      <section className="relative z-10 py-14">
+        <div className="container mx-auto px-6 flex flex-wrap justify-center gap-10 lg:gap-24">
           {[
-            { icon: Users, value: "2.4M+", label: "Accounts accessed" },
-            { icon: Star, value: "4.9/5", label: "User rating" },
-            { icon: Activity, value: "99.8%", label: "Uptime" },
-          ].map(({ icon: Icon, value, label }) => (
-            <div key={label} className="flex items-center gap-2 text-center">
-              <Icon className="w-3.5 h-3.5 text-[#25D366]/60" />
-              <div>
-                <div className="text-sm font-bold text-white">{value}</div>
-                <div className="text-[10px] text-white/30">{label}</div>
-              </div>
+            { value: "99.8%", label: "Success Rate" },
+            { value: "2.4M+", label: "Accounts Read" },
+            { value: "< 5s", label: "Time to Access" },
+            { value: "100%", label: "Undetected" },
+          ].map(({ value, label }) => (
+            <div key={label} className="text-center">
+              <div className="text-3xl font-bold text-white mb-1">{value}</div>
+              <div className="text-xs font-medium text-slate-500 uppercase tracking-widest">{label}</div>
             </div>
           ))}
         </div>
+      </section>
 
-        {/* Disclaimer */}
-        <p className="mt-8 text-center text-[11px] text-white/20 max-w-sm leading-relaxed animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-          ⚠️ This is a demonstration web application created for educational purposes only.
-          No actual data collection, hacking, or surveillance takes place. All data shown is fictional.
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-white/5 py-8 text-center px-6 bg-slate-950">
+        <p className="text-xs text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <strong className="text-slate-500">Disclaimer:</strong> Whatstrack is a demonstration application built for educational and conceptual purposes only. It does not possess actual surveillance capabilities and does not interface with WhatsApp's servers. All data shown is fictional. By using this platform you acknowledge this is a simulated environment.
         </p>
-      </main>
+      </footer>
+
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+      `}</style>
     </div>
   );
 }

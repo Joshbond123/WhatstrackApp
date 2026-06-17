@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { ArrowLeft, Search, MoreVertical, Phone, Video, Check, CheckCheck, Image, FileVideo, Info } from "lucide-react";
+import { ArrowLeft, Search, MoreVertical, Phone, Video, Check, CheckCheck, Image, FileVideo, CheckCircle, Eye } from "lucide-react";
 
 interface Props {
   phone: string;
@@ -48,7 +48,7 @@ function getContactName(phone: string) {
 }
 
 export default function ChatPage({ phone, onReset }: Props) {
-  const [showInfo, setShowInfo] = useState(true);
+  const [showBanner, setShowBanner] = useState(true);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const contactName = getContactName(phone);
   const avatarColor = AVATAR_COLORS[hashPhone(phone) % AVATAR_COLORS.length];
@@ -56,10 +56,45 @@ export default function ChatPage({ phone, onReset }: Props) {
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Auto-hide the banner after 8 seconds
+    const t = setTimeout(() => setShowBanner(false), 8000);
+    return () => clearTimeout(t);
   }, []);
 
   return (
     <div className="h-screen flex flex-col bg-[#0b1014]">
+
+      {/* Access Granted Banner */}
+      {showBanner && (
+        <div
+          className="flex-shrink-0 flex items-center gap-3 px-5 py-3.5 bg-gradient-to-r from-[#25D366]/20 via-emerald-900/30 to-[#25D366]/20 border-b border-[#25D366]/30"
+          style={{ animation: "slideDownBanner 0.45s cubic-bezier(0.34,1.2,0.64,1) forwards" }}
+        >
+          <div className="w-8 h-8 rounded-full bg-[#25D366]/20 border border-[#25D366]/40 flex items-center justify-center flex-shrink-0">
+            <CheckCircle className="w-4 h-4 text-[#25D366]" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-bold text-white">Access Granted</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#25D366]/70 bg-[#25D366]/10 px-2 py-0.5 rounded-full border border-[#25D366]/20">Live</span>
+            </div>
+            <p className="text-xs text-slate-400 mt-0.5 font-mono truncate">
+              Reading messages for <span className="text-[#25D366]">{phone}</span> · {MESSAGES.length} messages loaded
+            </p>
+          </div>
+          <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono text-slate-500">
+            <Eye className="w-3.5 h-3.5" />
+            <span>Monitoring active · target unaware</span>
+          </div>
+          <button
+            onClick={() => setShowBanner(false)}
+            className="text-slate-500 hover:text-white transition-colors text-lg leading-none flex-shrink-0 cursor-pointer ml-2"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       {/* Dashboard topbar */}
       <div className="flex-shrink-0 border-b border-white/5 bg-[#111b21] px-4 py-3 flex items-center gap-3">
         <button
@@ -71,7 +106,7 @@ export default function ChatPage({ phone, onReset }: Props) {
         </button>
         <div className="flex-1 flex items-center gap-2">
           <span className="text-[10px] font-mono uppercase tracking-wider text-[#25D366]/60">Monitor Active</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse-green inline-block"></span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] inline-block" style={{ animation: "pulse-green 1.5s ease-in-out infinite" }}></span>
         </div>
         <span className="text-[10px] text-white/25 font-mono hidden sm:block">{phone}</span>
       </div>
@@ -80,7 +115,6 @@ export default function ChatPage({ phone, onReset }: Props) {
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar (desktop) */}
         <div className="hidden md:flex w-80 flex-col border-r border-white/5 bg-[#111b21]">
-          {/* Sidebar header */}
           <div className="flex items-center justify-between p-4 border-b border-white/5">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-sm" style={{ background: avatarColor }}>
@@ -91,7 +125,6 @@ export default function ChatPage({ phone, onReset }: Props) {
             <Search className="w-4 h-4 text-white/40 cursor-pointer" />
           </div>
 
-          {/* Chat list */}
           <div className="flex-1 overflow-y-auto">
             {[
               { name: contactName, last: "See you at 8 then!", time: "6:20 PM", unread: 0, color: avatarColor },
@@ -145,20 +178,8 @@ export default function ChatPage({ phone, onReset }: Props) {
             </div>
           </div>
 
-          {/* Info banner */}
-          {showInfo && (
-            <div className="flex-shrink-0 mx-3 mt-3 px-4 py-2.5 rounded-xl bg-[#1f2c34] border border-amber-500/20 flex items-start gap-2.5 text-xs text-amber-400/80 animate-fade-in-up">
-              <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
-              <span className="leading-relaxed flex-1">
-                <strong>Demo only.</strong> Messages shown below are fictional sample data for demonstration purposes. No real WhatsApp data has been accessed.
-              </span>
-              <button onClick={() => setShowInfo(false)} className="text-amber-400/50 hover:text-amber-400 cursor-pointer text-base leading-none -mt-0.5 flex-shrink-0">×</button>
-            </div>
-          )}
-
           {/* Messages */}
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1 chat-container">
-            {/* Date badge */}
             <div className="flex justify-center mb-4">
               <span className="px-3 py-1 rounded-full bg-[#182229] text-white/40 text-[11px] font-mono">TODAY</span>
             </div>
@@ -167,50 +188,39 @@ export default function ChatPage({ phone, onReset }: Props) {
               <div
                 key={msg.id}
                 className={`flex ${msg.type === "out" ? "justify-end" : "justify-start"} mb-0.5`}
-                style={{ animationDelay: `${i * 0.05}s` }}
+                style={{ animation: `${msg.type === "out" ? "slideInRight" : "slideInLeft"} 0.3s ease-out`, animationDelay: `${i * 0.04}s`, animationFillMode: "backwards" }}
               >
                 <div
-                  className={`max-w-[75%] sm:max-w-[60%] px-3 pt-2 pb-1.5 rounded-xl relative ${
-                    msg.type === "out"
-                      ? "chat-bubble-out rounded-tr-sm"
-                      : "chat-bubble-in rounded-tl-sm"
+                  className={`max-w-[75%] sm:max-w-[60%] px-3 pt-2 pb-1.5 rounded-xl ${
+                    msg.type === "out" ? "rounded-tr-sm" : "rounded-tl-sm"
                   }`}
                   style={{
                     background: msg.type === "out" ? "#005c4b" : "#202c33",
-                    boxShadow: msg.type === "out"
-                      ? "0 1px 0.5px rgba(0,0,0,0.3)"
-                      : "0 1px 0.5px rgba(0,0,0,0.3)"
+                    boxShadow: "0 1px 0.5px rgba(0,0,0,0.3)",
                   }}
                 >
-                  {/* Media */}
                   {msg.media && (
-                    <div className="mb-1.5 rounded-lg overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center"
-                      style={{ width: 200, height: 130 }}
-                    >
+                    <div className="mb-1.5 rounded-lg overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center" style={{ width: 200, height: 130 }}>
                       {msg.media === "image" ? (
-                        <div className="w-full h-full flex flex-col items-center justify-center gap-2">
-                          <div className="w-full h-full bg-gradient-to-br from-[#25D366]/20 to-[#128C7E]/30 flex flex-col items-center justify-center gap-2">
-                            <Image className="w-8 h-8 text-[#25D366]/60" />
-                            <span className="text-[10px] text-white/40 font-mono px-2 text-center truncate w-full text-center">{msg.mediaLabel}</span>
-                          </div>
+                        <div className="w-full h-full bg-gradient-to-br from-[#25D366]/20 to-[#128C7E]/30 flex flex-col items-center justify-center gap-2">
+                          <Image className="w-8 h-8 text-[#25D366]/60" />
+                          <span className="text-[10px] text-white/40 font-mono px-2 text-center truncate w-full">{msg.mediaLabel}</span>
                         </div>
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-[#1a1a2e]/80 to-[#0d1117]/80 flex flex-col items-center justify-center gap-2">
                           <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
                             <FileVideo className="w-6 h-6 text-white/50" />
                           </div>
-                          <span className="text-[10px] text-white/40 font-mono px-2 text-center truncate w-full text-center">{msg.mediaLabel}</span>
+                          <span className="text-[10px] text-white/40 font-mono px-2 text-center truncate w-full">{msg.mediaLabel}</span>
                         </div>
                       )}
                     </div>
                   )}
 
-                  {/* Text */}
                   {msg.content && (
                     <p className="text-[14px] text-white/90 leading-relaxed break-words">{msg.content}</p>
                   )}
 
-                  {/* Meta */}
                   <div className="flex items-center justify-end gap-1 mt-0.5">
                     <span className="text-[11px] text-white/35">{msg.time}</span>
                     {msg.type === "out" && (
@@ -239,19 +249,38 @@ export default function ChatPage({ phone, onReset }: Props) {
             <div ref={chatEndRef} />
           </div>
 
-          {/* Input bar (disabled/fake) */}
+          {/* Fake input bar */}
           <div className="flex-shrink-0 px-3 py-3 bg-[#202c33] border-t border-white/5 flex items-center gap-3">
             <div className="flex-1 px-4 py-2.5 rounded-full bg-[#2a3942] text-white/25 text-sm select-none">
               Type a message...
             </div>
             <div className="w-10 h-10 rounded-full bg-[#00a884] flex items-center justify-center cursor-not-allowed opacity-60">
               <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
-                <path d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"/>
+                <path d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z" />
               </svg>
             </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes slideDownBanner {
+          from { opacity: 0; transform: translateY(-100%); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse-green {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+        @keyframes slideInRight {
+          from { opacity: 0; transform: translateX(16px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInLeft {
+          from { opacity: 0; transform: translateX(-16px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+      `}</style>
     </div>
   );
 }

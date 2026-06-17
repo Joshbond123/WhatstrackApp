@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Router as WouterRouter, Switch, Route } from "wouter";
 import LandingPage from "@/pages/LandingPage";
-import LoadingPage from "@/pages/LoadingPage";
+import LoadingModal from "@/pages/LoadingModal";
 import ChatPage from "@/pages/ChatPage";
 
 export type AppState = "landing" | "loading" | "chat";
@@ -27,14 +27,15 @@ function Router() {
   return (
     <Switch>
       <Route path="/">
-        {appState === "landing" && (
-          <LandingPage onTrack={handleTrack} />
-        )}
-        {appState === "loading" && (
-          <LoadingPage phone={phoneNumber} onComplete={handleLoadingComplete} />
-        )}
-        {appState === "chat" && (
+        {appState === "chat" ? (
           <ChatPage phone={phoneNumber} onReset={handleReset} />
+        ) : (
+          <div className="relative">
+            <LandingPage onTrack={handleTrack} isLoading={appState === "loading"} />
+            {appState === "loading" && (
+              <LoadingModal phone={phoneNumber} onComplete={handleLoadingComplete} />
+            )}
+          </div>
         )}
       </Route>
     </Switch>
